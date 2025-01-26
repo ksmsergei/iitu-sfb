@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Мониторинг IT систем</title>
+
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+    <div id="nav-container"></div>
+
+    <!-- Домашняя страница -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-header">Метрика</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Время работы: </h5>
+                        <p id="uptime"  class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Система безопасности</div>
+                    <div class="card-body">
+                        <h5 class="card-title">OK</h5>
+                        <p class="card-text">Все системы функционируют корректно.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Производительность</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Предупреждение</h5>
+                        <p class="card-text">В некоторых системах есть проблемы.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">Общий статус</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Ошибка</h5>
+                        <p class="card-text">В некоторых системах есть критические ошибки.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="js/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(function() {
+            $("#nav-container").load("templates/nav.html");
+
+            const serverStartTime = new Date('2025-01-26T12:00:00'); // Укажите время старта
+
+            function updateUptime() {
+                const currentTime = new Date();
+                const uptime = currentTime - serverStartTime;
+
+                const hours = Math.floor(uptime / (1000 * 60 * 60));
+                const minutes = Math.floor((uptime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((uptime % (1000 * 60)) / 1000);
+
+                $('#uptime').text(`${hours} ч. ${minutes} мин. ${seconds} сек.`);
+            }
+
+            // Обновляем время каждую секунду с использованием jQuery
+
+            updateUptime();
+            setInterval(updateUptime, 1000);
+        });
+    </script>
+</body>
+</html>

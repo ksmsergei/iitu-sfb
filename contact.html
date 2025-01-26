@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Обратная связь</title>
+
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <!-- Обратная связь -->
+  <div class="container mt-5">
+    <h2 class="mb-4">Обратная связь</h2>
+    <form id="contact-form">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email <span style="color: red;">*</span></label>
+        <input type="email" class="form-control" id="email" placeholder="Ваш Email" required>
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Имя</label>
+        <input type="text" class="form-control" id="name" placeholder="Ваше имя">
+      </div>
+      <div class="mb-3">
+        <label for="message" class="form-label">Сообщение <span style="color: red;">*</span></label>
+        <textarea class="form-control" id="message" rows="5" placeholder="Ваше сообщение" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+  </div>
+
+  <!-- Модальное окно -->
+  <div id="submit-modal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Успешная отправка</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Спасибо за обратную связь! Мы обязательно свяжемся с вами.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/bootstrap.bundle.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+
+  <script>
+    $(function() {
+      $("#nav-container").load("templates/nav.html");
+    });
+
+    $('#contact-form').on('submit', function (event) {
+      event.preventDefault();
+      $('#submit-modal').modal('show');
+    });
+  </script>
+</body>
+</html>
