@@ -73,8 +73,6 @@
                 $('#uptime').text(`${hours} ч. ${minutes} мин. ${seconds} сек.`);
             }
 
-            // Обновляем время каждую секунду с использованием jQuery
-
             updateUptime();
             setInterval(updateUptime, 1000);
         });
