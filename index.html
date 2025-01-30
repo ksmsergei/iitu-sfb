@@ -3,77 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>Мониторинг IT систем</title>
-
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <style>
+        .progress {
+            height: 25px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .progress-bar {
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 25px;
+            border-radius: 10px;
+        }
+        .cpu-bar { background: linear-gradient(90deg, #ff6b6b, #d9534f); }
+        .ram-bar { background: linear-gradient(90deg, #ffdd57, #f0ad4e); }
+    </style>
 </head>
 <body>
-    <!-- Домашняя страница -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card text-white bg-primary mb-3">
-                    <div class="card-header">Метрика</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Время работы: </h5>
-                        <p id="uptime"  class="card-text"></p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-white bg-primary mb-3 card-clickable" data-bs-toggle="modal" data-bs-target="#statusModal" data-modal-content="Метрика">
+                <div class="card-header" data-bs-toggle="tooltip" title="Время работы системы">Метрика</div>
+                <div class="card-body">
+                    <h5 class="card-title">Время работы: </h5>
+                    <p id="uptime" class="card-text"></p>
+                    <div class="progress mt-3">
+                        <div class="progress-bar cpu-bar" style="width: 60%">CPU 60%</div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card text-white bg-success mb-3">
-                    <div class="card-header">Система безопасности</div>
-                    <div class="card-body">
-                        <h5 class="card-title">OK</h5>
-                        <p class="card-text">Все системы функционируют корректно.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card text-white bg-warning mb-3">
-                    <div class="card-header">Производительность</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Предупреждение</h5>
-                        <p class="card-text">В некоторых системах есть проблемы.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card text-white bg-danger mb-3">
-                    <div class="card-header">Общий статус</div>
-                    <div class="card-body">
-                        <h5 class="card-title">Ошибка</h5>
-                        <p class="card-text">В некоторых системах есть критические ошибки.</p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar ram-bar" style="width: 75%">RAM 75%</div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-success mb-3 card-clickable" data-bs-toggle="modal" data-bs-target="#statusModal" data-modal-content="Система безопасности">
+                <div class="card-header">Система безопасности</div>
+                <div class="card-body">
+                    <h5 class="card-title">OK</h5>
+                    <p class="card-text">Все системы функционируют корректно.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-warning mb-3 card-clickable" data-bs-toggle="modal" data-bs-target="#statusModal" data-modal-content="Производительность">
+                <div class="card-header">Производительность</div>
+                <div class="card-body">
+                    <h5 class="card-title">Предупреждение</h5>
+                    <p class="card-text">В некоторых системах есть проблемы.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-white bg-danger mb-3 card-clickable" id="errorCard" data-bs-toggle="modal" data-bs-target="#statusModal" data-modal-content="Общий статус">
+                <div class="card-header">Общий статус</div>
+                <div class="card-body">
+                    <h5 class="card-title">Ошибка</h5>
+                    <p class="card-text">В некоторых системах есть критические ошибки.</p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <script src="js/bootstrap/bootstrap.bundle.js"></script>
-    <script src="js/jquery-3.7.1.min.js"></script>
+<!-- Модальное окно -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Детали</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <p>Здесь будет информация.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script src="js/load-nav.js"></script>
+<script src="js/bootstrap/bootstrap.bundle.js"></script>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script src="js/load-nav.js"></script>
+<script>
+    $(function() {
+        const serverStartTime = new Date('2025-01-26T12:00:00');
+        function updateUptime() {
+            const currentTime = new Date();
+            const uptime = currentTime - serverStartTime;
+            const hours = Math.floor(uptime / (1000 * 60 * 60));
+            const minutes = Math.floor((uptime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((uptime % (1000 * 60)) / 1000);
+            $('#uptime').text(`${hours} ч. ${minutes} мин. ${seconds} сек.`);
+        }
+        updateUptime();
+        setInterval(updateUptime, 1000);
 
-    <script>
-        $(function() {
-            const serverStartTime = new Date('2025-01-26T12:00:00'); // Укажите время старта
+        $('[data-bs-toggle="tooltip"]').tooltip();
 
-            function updateUptime() {
-                const currentTime = new Date();
-                const uptime = currentTime - serverStartTime;
-
-                const hours = Math.floor(uptime / (1000 * 60 * 60));
-                const minutes = Math.floor((uptime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((uptime % (1000 * 60)) / 1000);
-
-                $('#uptime').text(`${hours} ч. ${minutes} мин. ${seconds} сек.`);
-            }
-
-            updateUptime();
-            setInterval(updateUptime, 1000);
+        $('.card-clickable').click(function() {
+            let modalContent = $(this).attr('data-modal-content');
+            $('#modalTitle').text(modalContent);
+            $('#modalBody').html(`<p>Дополнительные сведения о: ${modalContent}</p>`);
         });
-    </script>
+    });
+</script>
 </body>
 </html>
