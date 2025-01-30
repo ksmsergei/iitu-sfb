@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 </head>
 <body>
-  <div id="nav-container"></div>
-
   <!-- Обратная связь -->
   <div class="container mt-5">
     <h2 class="mb-4">Обратная связь</h2>
@@ -49,14 +47,12 @@
     </div>
   </div>
 
-  <script src="js/bootstrap.bundle.js"></script>
+  <script src="js/bootstrap/bootstrap.bundle.js"></script>
   <script src="js/jquery-3.7.1.min.js"></script>
 
-  <script>
-    $(function() {
-      $("#nav-container").load("templates/nav.html");
-    });
+  <script src="js/load-nav.js"></script>
 
+  <script>
     $('#contact-form').on('submit', function (event) {
       event.preventDefault();
       $('#submit-modal').modal('show');
