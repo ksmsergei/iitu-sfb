@@ -114,7 +114,7 @@
         $('.card-clickable').click(function() {
             let modalContent = $(this).attr('data-modal-content');
             $('#modalTitle').text(modalContent);
-            $('#modalBody').html(`<p>Дополнительные сведения о: ${modalContent}</p>`);
+            $('#modalBody').html(`<p>Дополнительные сведения о: <br><b>${modalContent}</b></p>`);
         });
     });
 </script>
