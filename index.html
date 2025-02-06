@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Мониторинг IT систем</title>
+
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+
     <style>
         .progress {
             height: 25px;
@@ -19,10 +22,66 @@
         }
         .cpu-bar { background: linear-gradient(90deg, #ff6b6b, #d9534f); }
         .ram-bar { background: linear-gradient(90deg, #ffdd57, #f0ad4e); }
+
+        .carousel-img {
+            max-height: 400px; /* Устанавливаем максимальную высоту */
+            object-fit: cover; /* Обрезаем изображение, чтобы оно заполнило контейнер */
+            object-position: center calc(100% + 50px);
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.7); /* Тёмный фон */
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+
+    <!-- Карусель -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/images/server1.jpg" class="d-block w-100 carousel-img" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Реальное время – Реальные данные</h5>
+                <p>Мониторинг серверов, сетей и приложений в режиме реального времени. Всегда будь на шаг впереди с актуальной аналитикой.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/server2.jpg" class="d-block w-100 carousel-img" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Автоматизированные оповещения</h5>
+                <p>Настраиваемые уведомления о сбоях и перегрузках. Получайте важные предупреждения через email, Telegram или Slack.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/server3.jpg" class="d-block w-100 carousel-img" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Полная прозрачность инфраструктуры</h5>
+                <p>Интерактивные дашборды с ключевыми метриками. Контролируйте производительность и безопасность IT-систем в одном окне.</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<!-- Карточки -->
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12">
@@ -31,6 +90,8 @@
                 <div class="card-body">
                     <h5 class="card-title">Время работы: </h5>
                     <p id="uptime" class="card-text"></p>
+
+                    <!-- Прогресс бары -->
                     <div class="progress mt-3">
                         <div class="progress-bar cpu-bar" style="width: 60%">CPU 60%</div>
                     </div>
@@ -90,7 +151,7 @@
 
 <script src="js/bootstrap/bootstrap.bundle.js"></script>
 <script src="js/jquery-3.7.1.min.js"></script>
-<script src="js/load-nav.js"></script>
+<script src="js/load-page-parts.js"></script>
 <script>
     $(function() {
         const serverStartTime = new Date('2025-01-30T12:00:00');
